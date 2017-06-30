@@ -1,0 +1,51 @@
+html{
+	height: 100%;
+	width:100%;
+}
+
+body{
+	/*font-family: 'Satisfy', cursive;*/
+	font-family: 'Oswald', sans-serif;	
+	background-image: url("../images/vintage-background-floral-patterns-vintage-background-simple-vintage--3.jpeg");
+	color: blue;
+    background-size: cover;
+	line-height: 40px;
+}
+
+h1{
+	text-align: center;
+	line-height: 52px;
+}
+
+p{
+	text-align: center;
+}
+
+.timer{
+	text-align: center;
+	font-size: 32px;
+	color: green;
+	line-height: 40px;
+}
+
+.timerYellow{
+	text-align: center;
+	font-size: 32px;
+	color: yellow;
+}
+
+.timerRed{
+	text-align: center;
+	font-size: 32px;
+	color: red;
+}
+
+.game{
+	min-height: 200px;
+	min-width: 200px;	
+	background-color: transparent;
+
+	text-align: center;
+	font-size: 32px;
+
+}
