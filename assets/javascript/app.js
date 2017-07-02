@@ -14,16 +14,28 @@ var correctAnswer = 0;
 var unAnswered = 0;
 var bSingleGame = true;
 var gameData = [
-        {question:"While used often in Sherlock Holmes movies, this line doesn't appear in any Doyle-written Holmes book.", ans1:"The games afoot ", ans2:"Elementary, My dear Watson ", ans3:"When you have eliminated the impossible, whatever remains, however improbable, must be the truth", answer:"1"},
-		{question:"How many Sherlockian societies are in existence?", ans1:"Between 100 and 400 ", ans2:"Between 400 and  800 ", ans3:"Over 800", answer:"2"},
-		{question:"What kind of doctor was Sherlock’s crimefighting cohort Dr. John Watson, originally?", ans1:"Internist ", ans2:"Rheumatist ", ans3:"Army surgeon ", answer:"2"},
-		{question:"The double-brimmed, houndstooth-patterned hat Sherlock famously wore (in the movies) is known as a what?", ans1:"Deerstalker ", ans2:"Monmouth ", ans3:"Cavalier ", answer:"0"},
-		{question:"What was the name of the street toughs who serve as informants and errand boys for Holmes and Watson?", ans1:"The Baker Street Irregulars", ans2:"The Scarlet Street Singulars", ans3:"The Criminal Kids", answer:"0"},
-		{question:"In the 1890 mystery “The Sign of the Four”, Sherlock employs what bit of evidence two years before a real-world police department would?", ans1:"Blood spatter analysis ", ans2:"Fingerprints ", ans3:"Handwriting analysis", answer:"1"},
-		{question:"What British actor starred in 14 Sherlock Holmes films between 1939 and 1946?", ans1:"Peter Finch", ans2:"Alec Guinness", ans3:"Basil Rathbone", answer:"2"},
-		{question:"Who directed the recent action-comedy Sherlock Holmes films?", ans1:"Guy Ritchie", ans2:"Quentin Tarintino", ans3:"Justing Lin", answer:"0"},
-		{question:"What happens in the 1893 short story—although only temporarily?", ans1:"Watson is committed to the London Sanitarium for the Criminally Insane ", ans2:"Sherlock and Watson become a vaudeville act ", ans3:"Sherlock dies", answer:"2"},
-		{question:"In the short story “His Last Bow”, Sherlock retires and takes up what hobby?", ans1:"Beekeeping ", ans2:"Making jam ", ans3:"Making soap ", answer:"0"},
+        {question:"While used often in Sherlock Holmes movies, this line doesn't appear in any Doyle-written Holmes book.", 
+        	ans1:"The games afoot ", ans2:"Elementary, My dear Watson ", ans3:"When you have eliminated the impossible, whatever remains, however improbable, must be the truth", 
+        	answer:"1", explanation:"Holmes does say 'Elementary' but never says 'My dear Watson'"},
+		{question:"How many Sherlockian societies are in existence?", ans1:"Between 100 and 400 ", 
+			ans2:"Between 400 and  800 ", ans3:"Over 800", answer:"2", explanation:"There are at least 900 know societies dedicated to all-things Homes."},
+		{question:"What kind of doctor was Sherlock’s crimefighting cohort Dr. John Watson, originally?", 
+			ans1:"Internist ", ans2:"Rheumatist ", ans3:"Army surgeon ", answer:"2", explanation:"Watson is retired from the Army."},
+		{question:"The double-brimmed, houndstooth-patterned hat Sherlock famously wore (in the movies) is known as a what?", 
+			ans1:"Deerstalker ", ans2:"Monmouth ", ans3:"Cavalier ", answer:"0", explanation:"The deerstalker cap was originally worn on-stage by the actor that also added the pipe."},
+		{question:"What was the name of the street toughs who serve as informants and errand boys for Holmes and Watson?", 
+			ans1:"The Baker Street Irregulars", ans2:"The Scarlet Street Singulars", ans3:"The Criminal Kids", answer:"0", explanation: "The group appears numerous times to add Holmes."},
+		{question:"In the 1890 mystery “The Sign of the Four”, Sherlock employs what bit of evidence two years before a real-world police department would?", 
+			ans1:"Blood spatter analysis ", ans2:"Fingerprints ", ans3:"Handwriting analysis", answer:"1", explanation: "Holmes was analyzing fingerpints about 6 years before the first police department did so."},
+		{question:"What British actor starred in 14 Sherlock Holmes films between 1939 and 1946?", 
+			ans1:"Peter Finch", ans2:"Alec Guinness", ans3:"Basil Rathbone", answer:"2", explanation: "Basil Rathbone "},
+		{question:"Who directed the recent action-comedy Sherlock Holmes films?", 
+			ans1:"Guy Ritchie", ans2:"Quentin Tarintino", ans3:"Justing Lin", answer:"0", explanation: "These starred Robert Downey Jr."},
+		{question:"What happens in the 1893 short story—although only temporarily?", 
+			ans1:"Watson is committed to the London Sanitarium for the Criminally Insane ", ans2:"Sherlock and Watson become a vaudeville act ", 
+			ans3:"Sherlock dies", answer:"2", explanation: "After outrage ensued, Doyle revived Holmes later."},
+		{question:"In the short story “His Last Bow”, Sherlock retires and takes up what hobby?", 
+			ans1:"Beekeeping ", ans2:"Making jam ", ans3:"Making soap ", answer:"0", explanation: "Why not?"},
 			];
 
 
@@ -223,13 +235,13 @@ function showQuestion(index) {
 function nextQuestion() {
 
 	if(bSingleGame) {
-
+		var options = $("input[type='radio']:checked");
 		clearTimeout(questTimer);
 		clearInterval(timerInterval);
 		$(".game").empty();
 
 			//Update statistics here
-			var options = $("input[type='radio']:checked");
+
 
 
 			if(options[0].value === gameData[questCount-1].answer)
@@ -244,8 +256,7 @@ function nextQuestion() {
 				$(".question").append("Incorrect" + "<br>");
 				wrongAnswer++;
 			}
-			$(".question").append(newDiv);
-			$(".question").append("<br>");
+
 
 			if(questCount < gameData.length)
 			{
