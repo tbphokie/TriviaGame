@@ -35,7 +35,7 @@ var gameData = [
 			ans1:"Watson is committed to the London Sanitarium for the Criminally Insane ", ans2:"Sherlock and Watson become a vaudeville act ", 
 			ans3:"Sherlock dies", answer:"2", explanation: "After outrage ensued, Doyle revived Holmes later."},
 		{question:"In the short story “His Last Bow”, Sherlock retires and takes up what hobby?", 
-			ans1:"Beekeeping ", ans2:"Making jam ", ans3:"Making soap ", answer:"0", explanation: "Why not?"},
+			ans1:"Beekeeping ", ans2:"Making jam ", ans3:"Making soap ", answer:"0", explanation: "Why not? citation to be added to these"},
 			];
 
 
