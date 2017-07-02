@@ -6,15 +6,19 @@ html{
 body{
 	/*font-family: 'Satisfy', cursive;*/
 	font-family: 'Oswald', sans-serif;	
-	background-image: url("../images/vintage-background-floral-patterns-vintage-background-simple-vintage--3.jpeg");
-	color: blue;
-    background-size: cover;
+	background-image: url("../images/sherlock.png");
+	background-size: cover;
+	/*background-image: url("../images/606232522.jpg");*/
+	/*background-image: url("../images/vintage-background-floral-patterns-vintage-background-simple-vintage--3.jpeg");*/
+	color: white;
 	line-height: 40px;
+	font-size: 36px;
 }
 
 h1{
 	text-align: center;
-	line-height: 52px;
+	font-size: 52px;
+	color: brown;
 }
 
 p{
@@ -44,8 +48,11 @@ p{
 	min-height: 200px;
 	min-width: 200px;	
 	background-color: transparent;
-
 	text-align: center;
 	font-size: 32px;
 
+}
+
+button{
+	color: black;
 }

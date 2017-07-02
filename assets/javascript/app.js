@@ -12,6 +12,7 @@ var timerStatus = 0;
 var wrongAnswer = 0;
 var correctAnswer = 0;
 var unAnswered = 0;
+var bSingleGame = true;
 var gameData = [
         {question:"While used often in Sherlock Holmes movies, this line doesn't appear in any Doyle-written Holmes book.", ans1:"The games afoot ", ans2:"Elementary, My dear Watson ", ans3:"When you have eliminated the impossible, whatever remains, however improbable, must be the truth", answer:"1"},
 		{question:"How many Sherlockian societies are in existence?", ans1:"Between 100 and 400 ", ans2:"Between 400 and  800 ", ans3:"Over 800", answer:"2"},
@@ -30,34 +31,50 @@ var gameData = [
 $('body').on('click', '#start', startGame);
 $('body').on('click', '#startOne', startGameOne);
 $('body').on('click', '#done', timedOut);
+$('body').on('click', '#restart', restartGame);
+$('body').on('click', '.option', nextQuestion);
+
+function restartGame() {
+	if(bSingleGame){
+		startGameOne();
+	}
+	else {
+		startGame();
+	}
+}
 
 function startGame() {
 
 	resetGame();
 
-	showQuestions();
-
-}
+	bSingleGame = false;
+	time = gameData.length * 15;
+	showQuestions();}
 
 function startGameOne() {
 
 	resetGame();
 
-	showQuestion();
-
+	bSingleGame = true;
+	time = 15;
+	questCount = 0;
+	showQuestion();	
 }
+
 function resetGame(){
 	$(".game").empty();
 
 	//set/reset values
 	timerCount = 0;
-	time = gameData.length * 15;
+
 	wrongAnswer = 0;
 	correctAnswer = 0;	
+	unAnswered = 0;
 }
 
 /* function: showQuestions
-	displays all trivia questions on the display at one time
+	displays all trivia questions on the display at one time;
+	starts game timer and sets update interval
 */
 function showQuestions() {
 
@@ -127,7 +144,7 @@ function updateTimer(){
 		$(".timer").addClass("timerYellow").removeClass("timer");
 		timerStatus = 1;
 	}
-	else if(((time)-timerCount) < 30 && timerStatus ===1)
+	else if(((time)-timerCount) < 30 && timerStatus === 1)
 	{
 		$(".timerYellow").addClass("timerRed").removeClass("timerYellow");
 		timerStatus = 2;
@@ -163,54 +180,87 @@ function  timeConverter(t) {
 */
 function showQuestion(index) {
 	var textString;
-	console.log("Showing question");
 
-		$(".game").append(questCount + " ");
-		$(".game").addClass("question");
-		$(".question").html(gameData[0].question + "<br>");	
+	$(".game").empty();
+	$(".game").addClass("question");
+	$(".question").append((questCount+1) + ". " + gameData[questCount].question + "<br>");	
 
-
-		var newDiv = $("<form>");
-		newDiv.addClass("option");
-		for(var i=0;i<3;i++)
+	var newDiv = $("<form>");
+	newDiv.addClass("option");
+	for(var j=0;j<3;j++)
+	{
+		var options = $("<input>");
+		options.attr('type', 'radio');
+		options.attr('name', 'radioOptions');
+		options.val(j);
+		if(j === 0)
 		{
-			var options = $("<input>");
-			options.attr('type', 'radio');
-			options.attr('name', 'radioOptions');
-			options.val(i);
-			if(i === 0)
+			textString = gameData[questCount].ans1;
+		}
+		else if(j === 1)
+		{
+			textString = gameData[questCount].ans2;
+		}
+		else
+		{
+			textString = gameData[questCount].ans3;
+		}
+		//options.append(textString);
+		newDiv.append(options);
+		newDiv.append(textString);
+		newDiv.append("<br>");
+
+	}
+	$(".question").append(newDiv);
+	$(".question").append("<br>");		
+	timerInterval = setInterval(updateTimer, 1000);
+	questTimer = setTimeout(timedOut, time * 1000);	
+	questCount++;	
+	timerCount = 0;
+}
+
+
+function nextQuestion() {
+
+	if(bSingleGame) {
+
+		clearTimeout(questTimer);
+		clearInterval(timerInterval);
+		$(".game").empty();
+
+			//Update statistics here
+			var options = $("input[type='radio']:checked");
+
+
+			if(options[0].value === gameData[questCount-1].answer)
 			{
-				textString = gameData[index].ans1;
-			}
-			else if(i === 1)
-			{
-				textString = gameData[index].ans2;
+				$(".game").addClass("question");
+				$(".question").append("Correct" + "<br>");	
+				correctAnswer++;
 			}
 			else
 			{
-				textString = gameData[index].ans3;
+				$(".game").addClass("question");
+				$(".question").append("Incorrect" + "<br>");
+				wrongAnswer++;
 			}
-			newDiv.append(options);
-			newDiv.append(textString);
-			//newDiv.append("<br>");
+			$(".question").append(newDiv);
+			$(".question").append("<br>");
 
-		}
-		$(".question").append(newDiv);
-		$(".question").append("<br>");	
-		timerInterval = setInterval(updateTimer, 1000);
-		questTimer = setTimeout(timedOut, 10000);	
-		questCount++;	
-
+			if(questCount < gameData.length)
+			{
+				questTimer = setTimeout(showQuestion, 5000);
+				//showQuestion(questCount);
+			}
+			else
+				questTimer = setTimeout(timedOut, 5000);
+				//timedOut();
+	}
 }
-
 /* timedOut
 	called when timer expires
 */
 function timedOut(){
-	updateTimer();
-
-
-
 
 //	val = $('input[name="radioOptions"]:checked', '.option').val();
 
@@ -219,10 +269,13 @@ function timedOut(){
 
 	if(questCount < gameData.length)
 	{
+		clearTimeout(questTimer);
+		clearInterval(timerInterval);
 		showQuestion(questCount);
 	}
 	else
 	{
+		updateTimer();
 		endGame();
 	}
 }
@@ -242,16 +295,21 @@ function endGame()
 {
 	clearTimeout(questTimer);
 	clearInterval(timerInterval);
-	var val = [];
-	var options = $("input[type='radio']:checked");
 
-	for(i=0;i<options.length;i++)
+
+	if(!bSingleGame)
 	{
-		if(options[i].value === gameData[i].answer)
-			correctAnswer++;
-		else
-			wrongAnswer++;
+		var val = [];
+		var options = $("input[type='radio']:checked");
+		for(i=0;i<options.length;i++)
+		{
+			if(options[i].value === gameData[i].answer)
+				correctAnswer++;
+			else
+				wrongAnswer++;
+		}		
 	}
+
 	unAnswered = gameData.length - correctAnswer - wrongAnswer;
 
 	$(".game").empty();
@@ -259,4 +317,8 @@ function endGame()
 	$(".game").append("<p> Incorrect Answers: " + wrongAnswer + "</p>");
 	$(".game").append("<p> Unanswered Questions: " + unAnswered + "</p>");
 	
+	var newBtn = $("<button>");
+	newBtn.attr('id', 'restart');
+	newBtn.text("Restart");
+	$(".game").append(newBtn);	
 }
