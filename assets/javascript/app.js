@@ -12,12 +12,12 @@ var timerStatus = 0;
 var wrongAnswer = 0;
 var correctAnswer = 0;
 var unAnswered = 0;
-var bSingleGame = true;
+var bSingleGame = true
 var gameData = [
         {question:"While used often in Sherlock Holmes movies, this line doesn't appear in any Doyle-written Holmes book.", 
         	ans1:"The games afoot ", ans2:"Elementary, My dear Watson ", ans3:"When you have eliminated the impossible, whatever remains, however improbable, must be the truth", 
-        	answer:"1", explanation:"Holmes does say 'Elementary' but never says 'My dear Watson'"},
-		{question:"How many Sherlockian societies are in existence?", ans1:"Between 100 and 400 ", 
+        	answer:"1", explanation:"Holmes does say 'Elementary' but never says 'Elementary, my dear Watson'"},
+		{question:"How many Sherlockian societies are in existence?", ans1:"Between 100 and 400 ",  
 			ans2:"Between 400 and  800 ", ans3:"Over 800", answer:"2", explanation:"There are at least 900 known societies dedicated to all-things Homes."},
 		{question:"What kind of doctor was Sherlock’s crimefighting cohort Dr. John Watson, originally?", 
 			ans1:"Internist ", ans2:"Rheumatist ", ans3:"Army surgeon ", answer:"2", explanation:"Watson is retired from the Army."},
